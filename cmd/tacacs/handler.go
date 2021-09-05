@@ -31,13 +31,13 @@ func (h *Handler) HandleAcctRequest(c context.Context, req *tacplus.AcctRequest)
 
 func (h *Handler) HandleAuthenStart(c context.Context, req *tacplus.AuthenStart, sess *tacplus.ServerSession) *tacplus.AuthenReply {
 	log.Printf("HandleAuthenStart: %v\n", req)
-	cont, err := sess.GetPass(c, "Password:")
+	cont, err := sess.GetPass(context.Background(), "Password:")
 	if err != nil {
 		fmt.Printf("Error GetPass: %v\n", err)
 		return nil
 	}
 	if cont.Abort {
-		fmt.Printf("GetPass aborted: %v\n", cont.Message)
+		fmt.Printf("GetPass aborted: %v\n", cont)
 		return nil
 	}
 	pass := cont.Message
